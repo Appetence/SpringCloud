@@ -1,0 +1,43 @@
+mybatis: 
+    config-location: classpath:mybatis/mybatis.config.xml   # mybatis配置文件路径
+    type-aliases-package: com.mybatis.entites               #Entity实体类别所在包
+    mapper-locations: classpath:mybatis/mapper/**Mapper.xml   #mapper映射文件
+spring:
+   application: 
+      name: provider-dept
+   datasource:
+      type: com.alibaba.druid.pool.DruidDataSource           #当前数据源操作类型
+      url: jdbc:mysql://localhost:3306/springcloud8001?characterEncoding=UTF-8&autoReconnect=true
+      driver-class-name: com.mysql.jdbc.Driver            #驱动类
+      username: root
+      password: root
+      initialSize: 5
+      minIdle: 1   
+      maxActive: 100                                         #最大链接数
+      maxWait: 60000                                         #最大等待时间
+      timeBetweenEvictionRUnMillis: 60000
+      minEvictableIdeleTimeMillis: 300000
+      validaticonQuery: SELECT 1 FROM DUAL
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall,log4j
+      useGlobalDataSourceStat: true 
+   cloud:
+      config: false
+server:
+   port: 8001
+eureka: 
+   client:    #客户端注册如eureka服务列表
+      service-url: 
+         defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+   instance:
+      instance-id: springcloud-provide-dept-hystrix8001   #设置断容器名称
+      prefer-ip-address: true           #访问路径可以显示ip
+info:
+   app.name: springcloud-provider-dept
+   company.name: www.ztx.com
+   build.artifactId: $project.artifactId$
+   build.version: $project.version$
